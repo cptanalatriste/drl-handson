@@ -76,7 +76,7 @@ def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[fl
 
 
 if __name__ == "__main__":
-    cuda: bool = False  # Modify as required
+    cuda: bool = True  # Modify as required
     run_name: str = "run"
     mode: str = "forest"
 
