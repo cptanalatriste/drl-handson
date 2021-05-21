@@ -1,3 +1,7 @@
+# Workaround for Google Collab
+import sys
+sys.path.insert(1, "/content/gdrive/My Drive/google_colab/MAgent/python")
+
 import os
 from types import SimpleNamespace
 from typing import Dict, List, Tuple, Union
