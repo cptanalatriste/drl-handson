@@ -1,80 +1,31 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: osx-64
-absl-py=0.12.0=pyhd8ed1ab_0
-atari-py=0.2.6=pypi_0
-blas=1.0=mkl
-bzip2=1.0.8=h1de35cc_0
-c-ares=1.17.1=h0d85af4_1
-ca-certificates=2020.12.5=h033912b_0
-certifi=2020.12.5=py37hf985489_1
-cloudpickle=1.6.0=pypi_0
-coverage=5.5=py37h271585c_0
-dataclasses=0.6=pypi_0
-ffmpeg=4.3=h0a44026_0
-freetype=2.10.4=ha233b18_0
-future=0.18.2=pypi_0
-gettext=0.21.0=h7535e17_0
-gmp=6.2.1=h23ab428_2
-gnutls=3.6.15=hed9c0bf_0
-grpcio=1.35.0=py37h97de6d8_0
-gym=0.18.3=pypi_0
-icu=58.2=h0a44026_3
-ignite=0.4.4=py_0
-importlib-metadata=4.0.1=py37hf985489_0
-intel-openmp=2021.2.0=hecd8cb5_564
-jpeg=9b=he5867d9_2
-lame=3.100=h1de35cc_0
-lcms2=2.12=hf1fd2bf_0
-libcxx=10.0.0=1
-libffi=3.3=hb1e8313_2
-libiconv=1.16=h1de35cc_0
-libidn2=2.3.1=h9ed2024_0
-libpng=1.6.37=ha441bb4_0
-libprotobuf=3.14.0=h2842e9f_0
-libtasn1=4.16.0=h9ed2024_0
-libtiff=4.1.0=hcb84e12_1
-libunistring=0.9.10=h9ed2024_0
-libuv=1.40.0=haf1e3a3_0
-libxml2=2.9.10=h7cdb67c_3
-llvm-openmp=10.0.0=h28b9765_0
-lz4-c=1.9.3=h23ab428_0
-markdown=3.3.4=pyhd8ed1ab_0
-mkl=2021.2.0=hecd8cb5_269
-mkl-service=2.3.0=py37h9ed2024_1
-mkl_fft=1.3.0=py37h4a7008c_2
-mkl_random=1.2.1=py37hb2f4e1b_2
-ncurses=6.2=h0a44026_1
-nettle=3.7.2=h230ac6f_1
-ninja=1.10.2=hf7b0b51_1
-numpy=1.20.2=py37h4b4dc7a_0
-numpy-base=1.20.2=py37he0bd621_0
-olefile=0.46=py37_0
-opencv-python=4.5.2.52=pypi_0
-openh264=2.1.0=hd9629dc_0
-openssl=1.1.1k=h0d85af4_0
-pillow=8.2.0=py37h5270095_0
-pip=21.0.1=py37hecd8cb5_0
-protobuf=3.17.0=pypi_0
-ptan=0.7=pypi_0
-pyglet=1.5.15=pypi_0
-python=3.7.10=h88f2d9e_0
-python_abi=3.7=1_cp37m
-pytorch=1.8.1=py3.7_0
-readline=8.1=h9ed2024_0
-scipy=1.6.3=pypi_0
-setuptools=52.0.0=py37hecd8cb5_0
-six=1.15.0=py37hecd8cb5_0
-sqlite=3.35.4=hce871da_0
-tensorboard=1.15.0=py37_0
-tensorboard-pytorch=0.7.1=pypi_0
-tk=8.6.10=hb0a8c7a_0
-torch=1.7.0=pypi_0
-torchvision=0.9.1=py37_cpu
-typing_extensions=3.7.4.3=pyha847dfd_0
-werkzeug=2.0.1=pyhd8ed1ab_0
-wheel=0.36.2=pyhd3eb1b0_0
-xz=5.2.5=h1de35cc_0
-zipp=3.4.1=pyhd8ed1ab_0
-zlib=1.2.11=h1de35cc_3
-zstd=1.4.9=h322a384_0
+absl-py @ file:///home/conda/feedstock_root/build_artifacts/absl-py_1615404881292/work
+atari-py==0.2.6
+certifi==2020.12.5
+cloudpickle==1.6.0
+coverage @ file:///Users/runner/miniforge3/conda-bld/coverage_1614551329324/work
+dataclasses==0.6
+future==0.18.2
+grpcio @ file:///opt/concourse/worker/volumes/live/b2f90c2d-e2fb-4c06-6bed-1cffafec49d6/volume/grpcio_1613130423367/work
+gym==0.18.3
+importlib-metadata @ file:///Users/runner/miniforge3/conda-bld/importlib-metadata_1619012232934/work
+Markdown @ file:///home/conda/feedstock_root/build_artifacts/markdown_1614595805172/work
+mkl-fft==1.3.0
+mkl-random @ file:///opt/concourse/worker/volumes/live/45391dab-1d51-4226-600a-9065613b835f/volume/mkl_random_1618853975662/work
+mkl-service==2.3.0
+numpy @ file:///opt/concourse/worker/volumes/live/8f1c8f9f-9894-46f7-7adc-bf8ad6d8fadd/volume/numpy_and_numpy_base_1620831190001/work
+olefile==0.46
+opencv-python==4.5.2.52
+Pillow @ file:///opt/concourse/worker/volumes/live/0aff898a-aba9-4321-76c2-58d629e96356/volume/pillow_1617386155885/work
+protobuf==3.17.0
+ptan==0.7
+pyglet==1.5.15
+pytorch-ignite==0.4.4
+scipy==1.6.3
+six @ file:///opt/concourse/worker/volumes/live/f983ba11-c9fe-4dff-7ce7-d89b95b09771/volume/six_1605205318156/work
+tensorboard==1.15.0
+tensorboard-pytorch==0.7.1
+torch==1.8.1
+torchvision==0.9.1
+typing-extensions @ file:///home/ktietz/src/ci_mi/typing_extensions_1612808209620/work
+Werkzeug @ file:///home/conda/feedstock_root/build_artifacts/werkzeug_1621518206714/work
+zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1614945704755/work
