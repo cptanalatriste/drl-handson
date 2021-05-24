@@ -76,7 +76,7 @@ def unpack_batch(batch: List[ExperienceFirstLast]) -> Tuple[List, ndarray, ndarr
             np.array(dones, dtype=np.uint8), last_states)
 
 
-def obtain_dqn_loss(batch, net: DQNModel, target_net: DQNModel,
+def obtain_dqn_loss(batch, dqn_model: DQNModel, target_net: DQNModel,
                     preprocessor: MAgentPreprocessor, gamma: float,
                     device: Union[torch.device, str] = "cpu"):
     original_states, actions, rewards, dones, original_next_states = unpack_batch(batch)
@@ -89,7 +89,7 @@ def obtain_dqn_loss(batch, net: DQNModel, target_net: DQNModel,
     done_mask: ByteTensor = torch.ByteTensor(dones).to(device)
 
     actions_tensor: torch.tensor = actions_tensor.unsqueeze(-1)
-    state_action_values: torch.tensor = net(states).gather(1, actions_tensor)
+    state_action_values: torch.tensor = dqn_model(states).gather(1, actions_tensor)
     state_action_values = state_action_values.squeeze(-1)
 
     with torch.no_grad():

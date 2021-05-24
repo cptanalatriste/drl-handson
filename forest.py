@@ -1,5 +1,6 @@
 # Workaround for Google Collab
 import sys
+
 sys.path.insert(1, "/content/gdrive/My Drive/google_colab/MAgent/python")
 
 import os
@@ -27,16 +28,16 @@ COUNT_TIGERS = 10
 WALLS_DENSITY = 0.04
 
 PARAMETERS = SimpleNamespace(**{
+    'run_name': 'tigers',
+    'stop_reward': None,
+    'replay_size': 1000000,
+    'replay_initial': 100,
+    'target_net_sync': 1000,
+    'epsilon_frames': 5 * 10 ** 5,
     'epsilon_start': 1.0,
     'epsilon_final': 0.02,
-    'epsilon_frames': 5 * 10 ** 5,
-    'gamma': 0.99,
-    'replay_size': 1000000,
     'learning_rate': 1e-4,
-    'target_net_sync': 1000,
-    'stop_reward': None,
-    'run_name': 'tigers',
-    'replay_initial': 100,
+    'gamma': 0.99,
     'batch_size': 32
 
 })
@@ -60,12 +61,12 @@ def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[fl
     dqn_agent: ptan.agent.DQNAgent = ptan.agent.DQNAgent(dqn_model, ArgmaxActionSelector(),
                                                          device, preprocessor=pre_processor)
 
-    observation = magent_environment.reset()
+    observations = magent_environment.reset()
     steps: int = 0
     rewards: float = 0.0
 
     while True:
-        actions = dqn_agent(observation)[0]
+        actions = dqn_agent(observations)[0]
         observations, all_rewards, dones, _ = magent_environment.step(actions)
         steps += len(observations)
         rewards += sum(all_rewards)
@@ -77,6 +78,8 @@ def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[fl
 
 if __name__ == "__main__":
     cuda: bool = True  # Modify as required
+    if not cuda:
+        print("CUDA is not enabled!")
     run_name: str = "run"
     mode: str = "forest"
 
@@ -109,6 +112,7 @@ if __name__ == "__main__":
 
     action_selector: EpsilonGreedyActionSelector = EpsilonGreedyActionSelector(epsilon=PARAMETERS.epsilon_start)
     epsilon_tracker: EpsilonTracker = EpsilonTracker(action_selector, PARAMETERS)
+
     pre_processor: MAgentPreprocessor = MAgentPreprocessor(device)
     dqn_agent: ptan.agent.DQNAgent = ptan.agent.DQNAgent(dqn_model, action_selector, device,
                                                          preprocessor=pre_processor)
