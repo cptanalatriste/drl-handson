@@ -1,9 +1,14 @@
-# Workaround for Google Collab
 import sys
 
-import numpy as np
+# Workaround for Google Collab
+CUDA = True
+sys.path.insert(1, "/content/gdrive/My Drive/google_colab/MAgent/python")
 
-# sys.path.insert(1, "/content/gdrive/My Drive/google_colab/MAgent/python")
+from magent.gridworld import Config
+
+import social
+
+import numpy as np
 
 import os
 from types import SimpleNamespace
@@ -49,8 +54,8 @@ TEST_STEPS_METRTIC: str = 'test_steps'
 TEST_DEERS_METRIC: str = 'test_deers'
 
 
-def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[float, float, float]:
-    gridworld_test: GridWorld = GridWorld(mode, map_size=MAP_SIZE)
+def test_model(dqn_model: DQNModel, device: torch.device, configuration: Config) -> Tuple[float, float, float]:
+    gridworld_test: GridWorld = GridWorld(configuration, map_size=MAP_SIZE)
     deer_handle: int
     tiger_handle: int
     deer_handle, tiger_handle = gridworld_test.get_handles()
@@ -85,19 +90,17 @@ def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[fl
 
 
 if __name__ == "__main__":
-    # cuda: bool = True  # Modify as required
-    cuda: bool = False  # Modify as required
 
-    if not cuda:
+    if not CUDA:
         print("CUDA is not enabled!")
     run_name: str = "run"
-    mode: str = "forest"
+    configuration: Config = social.get_forest_configuration(MAP_SIZE)
 
-    device: torch.device = torch.device("cuda" if cuda else "cpu")
+    device: torch.device = torch.device("cuda" if CUDA else "cpu")
     saves_path = os.path.join("saves", run_name)
     os.makedirs(saves_path, exist_ok=True)
 
-    gridworld: GridWorld = GridWorld(mode, map_size=MAP_SIZE)
+    gridworld: GridWorld = GridWorld(configuration, map_size=MAP_SIZE)
 
     deer_handle: int
     tiger_handle: int
@@ -164,7 +167,7 @@ if __name__ == "__main__":
         dqn_model.train(False)
         test_reward: float
         test_steps: float
-        test_reward, test_steps, test_deers = test_model(dqn_model, device, mode)
+        test_reward, test_steps, test_deers = test_model(dqn_model, device, configuration)
         dqn_model.train(True)
 
         engine.state.metrics[TEST_REWARD_METRIC] = test_reward
