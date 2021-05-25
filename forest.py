@@ -1,7 +1,7 @@
 import sys
 
 # Workaround for Google Collab
-CUDA = False
+CUDA = True
 sys.path.insert(1, "/content/gdrive/My Drive/google_colab/MAgent/python")
 
 from magent.gridworld import Config

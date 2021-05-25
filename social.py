@@ -32,7 +32,7 @@ def get_forest_configuration(map_size: int) -> Config:
                                                                                          'damage': 3,
                                                                                          'step_recover': -0.5,
                                                                                          'food_supply': 0,
-                                                                                         'kill_supply': 0, # Temporarily disabled.
+                                                                                         'kill_supply': 16,
                                                                                          'step_reward': 1,
                                                                                          'attack_penalty': -0.1})
 
