@@ -1,7 +1,9 @@
 # Workaround for Google Collab
 import sys
 
-sys.path.insert(1, "/content/gdrive/My Drive/google_colab/MAgent/python")
+import numpy as np
+
+# sys.path.insert(1, "/content/gdrive/My Drive/google_colab/MAgent/python")
 
 import os
 from types import SimpleNamespace
@@ -42,8 +44,12 @@ PARAMETERS = SimpleNamespace(**{
 
 })
 
+TEST_REWARD_METRIC: str = 'test_reward'
+TEST_STEPS_METRTIC: str = 'test_steps'
+TEST_DEERS_METRIC: str = 'test_deers'
 
-def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[float, float]:
+
+def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[float, float, float]:
     gridworld_test: GridWorld = GridWorld(mode, map_size=MAP_SIZE)
     deer_handle: int
     tiger_handle: int
@@ -64,6 +70,7 @@ def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[fl
     observations = magent_environment.reset()
     steps: int = 0
     rewards: float = 0.0
+    deer_alive: int
 
     while True:
         actions = dqn_agent(observations)[0]
@@ -71,13 +78,16 @@ def test_model(dqn_model: DQNModel, device: torch.device, mode: str) -> Tuple[fl
         steps += len(observations)
         rewards += sum(all_rewards)
         if dones[0]:
+            deer_alive = np.count_nonzero(gridworld_test.get_alive(deer_handle))
             break
 
-    return rewards / COUNT_TIGERS, steps / COUNT_TIGERS
+    return rewards / COUNT_TIGERS, steps / COUNT_TIGERS, deer_alive / COUNT_DEERS
 
 
 if __name__ == "__main__":
-    cuda: bool = True  # Modify as required
+    # cuda: bool = True  # Modify as required
+    cuda: bool = False  # Modify as required
+
     if not cuda:
         print("CUDA is not enabled!")
     run_name: str = "run"
@@ -108,7 +118,7 @@ if __name__ == "__main__":
                                    gridworld.get_action_space(tiger_handle)[0]).to(device)
 
     target_net: TargetNet = ptan.agent.TargetNet(dqn_model)
-    print(target_net)
+    print(dqn_model)
 
     action_selector: EpsilonGreedyActionSelector = EpsilonGreedyActionSelector(epsilon=PARAMETERS.epsilon_start)
     epsilon_tracker: EpsilonTracker = EpsilonTracker(action_selector, PARAMETERS)
@@ -142,7 +152,8 @@ if __name__ == "__main__":
 
 
     engine = Engine(process_batch)
-    setup_ignite(engine, PARAMETERS, experience_source, run_name, extra_metrics=('test_reward', 'test_steps'))
+    setup_ignite(engine, PARAMETERS, experience_source, run_name,
+                 extra_metrics=(TEST_REWARD_METRIC, TEST_STEPS_METRTIC, TEST_DEERS_METRIC))
 
     best_test_reward: Union[float, None]
     best_test_reward = None
@@ -153,12 +164,15 @@ if __name__ == "__main__":
         dqn_model.train(False)
         test_reward: float
         test_steps: float
-        test_reward, test_steps = test_model(dqn_model, device, mode)
+        test_reward, test_steps, test_deers = test_model(dqn_model, device, mode)
         dqn_model.train(True)
 
-        engine.state.metrics['test_reward'] = test_reward
-        engine.state.metrics['test_steps'] = test_steps
-        print("Test done: got %.3f reward after %.2f steps" % (test_reward, test_steps))
+        engine.state.metrics[TEST_REWARD_METRIC] = test_reward
+        engine.state.metrics[TEST_STEPS_METRTIC] = test_steps
+        engine.state.metrics[TEST_DEERS_METRIC] = test_deers
+
+        print(
+            "Test done: got %.3f reward after %.2f steps. Deer survival %.3f " % (test_reward, test_steps, test_deers))
 
         global best_test_reward
         if best_test_reward is None:

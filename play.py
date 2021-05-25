@@ -40,6 +40,7 @@ if __name__ == "__main__":
     print(dqn_model)
 
     total_reward: float = 0.0
+    survivors: int
     while True:
         view_observation, feature_observation = environment.get_observation(tiger_handle)
 
@@ -56,10 +57,11 @@ if __name__ == "__main__":
         environment.set_action(tiger_handle, actions)
         done: bool = environment.step()
         if done:
+            survivors = np.count_nonzero(environment.get_alive(deer_handle))
             break
 
         environment.render()
         environment.clear_dead()
         total_reward += environment.get_reward(tiger_handle).sum()
 
-    print(f"Average reward: {total_reward / tigers}")
+    print(f"Average reward: {total_reward / tigers} Surviving deers {survivors} of {deers}")
