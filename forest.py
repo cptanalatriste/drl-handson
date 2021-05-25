@@ -95,9 +95,8 @@ if __name__ == "__main__":
         print("CUDA is not enabled!")
     else:
         print("Training on GPU")
-    run_name: str = "run"
+    run_name: str = "edible_tigers"
     configuration: Config = social.get_forest_configuration(MAP_SIZE)
-    PARAMETERS["run_name"] = "edible_tigers"
 
     device: torch.device = torch.device("cuda" if CUDA else "cpu")
     saves_path = os.path.join("saves", run_name)
