@@ -1,7 +1,7 @@
 import sys
 
 # Workaround for Google Collab
-CUDA = True
+CUDA = False
 sys.path.insert(1, "/content/gdrive/My Drive/google_colab/MAgent/python")
 
 from magent.gridworld import Config
@@ -75,18 +75,23 @@ def test_model(dqn_model: DQNModel, device: torch.device, configuration: Config)
     observations = magent_environment.reset()
     steps: int = 0
     rewards: float = 0.0
-    deer_alive: int
+    survivors: int = COUNT_DEERS
 
     while True:
         actions = dqn_agent(observations)[0]
         observations, all_rewards, dones, _ = magent_environment.step(actions)
         steps += len(observations)
         rewards += sum(all_rewards)
+
+        # Temporary hack
+        current_survivors: int = np.count_nonzero(gridworld_test.get_alive(deer_handle))
+        if current_survivors <= survivors:
+            survivors = current_survivors
+
         if dones[0]:
-            deer_alive = np.count_nonzero(gridworld_test.get_alive(deer_handle))
             break
 
-    return rewards / COUNT_TIGERS, steps / COUNT_TIGERS, deer_alive / COUNT_DEERS
+    return rewards / COUNT_TIGERS, steps / COUNT_TIGERS, survivors / COUNT_DEERS
 
 
 if __name__ == "__main__":

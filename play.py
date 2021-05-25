@@ -56,8 +56,8 @@ if __name__ == "__main__":
 
         environment.set_action(tiger_handle, actions)
         done: bool = environment.step()
+        survivors = np.count_nonzero(environment.get_alive(deer_handle))
         if done:
-            survivors = np.count_nonzero(environment.get_alive(deer_handle))
             break
 
         environment.render()
