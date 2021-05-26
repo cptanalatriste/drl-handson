@@ -98,7 +98,7 @@ class MAgentEnv(VectorEnv):
         return observations, rewards, dones, {}
 
 
-def get_forest_configuration(map_size: int) -> Config:
+def get_default_forest_configuration(map_size: int) -> Config:
     configuration: Config = Config()
 
     configuration.set({"map_width": map_size,

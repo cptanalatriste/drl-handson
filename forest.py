@@ -31,7 +31,7 @@ from model import DQNModel, MAgentPreprocessor, obtain_dqn_loss
 
 MAP_SIZE = 64
 COUNT_DEERS = 50
-COUNT_TIGERS = 25
+COUNT_TIGERS = 15
 WALLS_DENSITY = 0.04
 
 PARAMETERS = SimpleNamespace(**{
