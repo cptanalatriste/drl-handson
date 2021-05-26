@@ -14,7 +14,7 @@ if __name__ == "__main__":
     wall_density: float = 0.04
     deers: int = 50
     tigers: int = 10
-    model: str = "saves/run/best_67.500.dat"
+    model: str = "saves/edible_tigers/best_76.900.dat"
     map_location: torch.device = torch.device("cpu")
 
     configuration: Config = data.get_forest_configuration(map_size)
